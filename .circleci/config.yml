@@ -26,10 +26,6 @@ jobs:
               conda config --add channels defaults
               conda config --add channels conda-forge
               conda update -q conda
-
-              conda create -q -n test-env \
-                python=3.6 \
-                pip
             fi
 
             export PATH=`pwd`/miniconda/bin:$PATH
@@ -39,7 +35,7 @@ jobs:
             conda config --add channels conda-forge
             conda update -q conda
 
-            source activate test-env
+            source activate base
 
             conda install -y -q \
               nomkl \
@@ -56,7 +52,7 @@ jobs:
           name: info
           command: |
             export PATH=`pwd`/miniconda/bin:$PATH
-            source activate test-env
+            source activate base
             conda list
             echo " "
             conda info
@@ -65,12 +61,12 @@ jobs:
           name: build-base
           command: |
             export PATH=`pwd`/miniconda/bin:$PATH
-            source activate test-env
+            source activate base
             echo "building packages"
 
       - run:
           name: test
           command: |
             export PATH=`pwd`/miniconda/bin:$PATH
-            source activate test-env
+            source activate base
             pytest -vv test_conda.py
