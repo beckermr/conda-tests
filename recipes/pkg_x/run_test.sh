@@ -1,3 +1,3 @@
-test -f ${PREFIX}/bin/pkg-{{ name }}
+test -f ${PREFIX}/bin/pkg-x
 pkg-{{ name }}
-touch ${HOME}/tests/{{ name }}_tests_ran
+touch ${HOME}/tests/x_tests_ran

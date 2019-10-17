@@ -1,4 +1,4 @@
-{% set name = "x" %}
+{% set name = "y" %}
 {% set version = "1" %}
 
 package:
@@ -7,6 +7,7 @@ package:
 
 build:
   number: 0
+  noarch: python
   script: |
     echo "#!/bin/bash
 
@@ -16,14 +17,15 @@ build:
 requirements:
   host:
     - python
-    - pip
   run:
     - python
+    - matplotlib
 
 test:
   commands:
-    # not run
-    - echo "yes!"
+    - test -f ${PREFIX}/bin/pkg-{{ name }}
+    - pkg-{{ name }}
+    - touch ${HOME}/tests/{{ name }}_tests_ran
 
 about:
   license: MIT

@@ -38,3 +38,20 @@ def test_build_d():
     pname = os.path.join(
         CONDA_BLD, 'linux-64', 'd-second-1-py37_0.tar.bz2')
     assert os.path.exists(pname)
+
+
+def test_build_e():
+    subprocess.run("rm -f ${HOME}/tests/*", shell=True, check=True)
+    subprocess.run(
+        "conda build --use-local recipes/pkg_e", shell=True, check=True)
+
+    # this one runs downstreams
+    assert os.path.exists(os.path.join(TESTS, 'e_tests_ran'))
+
+    pname = os.path.join(
+        CONDA_BLD, 'linux-64', 'e-1-py36_0.tar.bz2')
+    assert os.path.exists(pname)
+
+    pname = os.path.join(
+        CONDA_BLD, 'linux-64', 'e-1-py37_0.tar.bz2')
+    assert os.path.exists(pname)

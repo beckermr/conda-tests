@@ -1,4 +1,4 @@
-{% set name = "x" %}
+{% set name = "e" %}
 {% set version = "1" %}
 
 package:
@@ -19,11 +19,13 @@ requirements:
     - pip
   run:
     - python
+    - y
 
 test:
   commands:
-    # not run
-    - echo "yes!"
+    - test -f ${PREFIX}/bin/pkg-{{ name }}
+    - pkg-{{ name }}
+    - touch ${HOME}/tests/{{ name }}_tests_ran
 
 about:
   license: MIT
