@@ -11,9 +11,9 @@ def test_build_c():
         "conda build --use-local recipes/pkg_c", shell=True, check=True)
 
     # this one runs downstreams
-    assert os.path.exists(TESTS, 'a_tests_ran')
-    assert os.path.exists(TESTS, 'b_tests_ran')
-    assert os.path.exists(TESTS, 'c_tests_ran')
+    assert os.path.exists(os.path.join(TESTS, 'a_tests_ran'))
+    assert os.path.exists(os.path.join(TESTS, 'b_tests_ran'))
+    assert os.path.exists(os.path.join(TESTS, 'c_tests_ran'))
 
     pname = os.path.join(
         CONDA_BLD, 'linux-64', 'c-1-py37_0.tar.bz2')

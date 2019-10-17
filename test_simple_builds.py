@@ -9,7 +9,7 @@ def test_build_a():
     subprocess.run("rm -f ${HOME}/tests/*", shell=True, check=True)
     subprocess.run("conda build recipes/pkg_a", shell=True, check=True)
 
-    assert os.path.exists(TESTS, 'a_tests_ran')
+    assert os.path.exists(os.path.join(TESTS, 'a_tests_ran'))
 
     for pyver in ['27', '36', '37']:
         pname = os.path.join(
@@ -21,7 +21,7 @@ def test_build_b():
     subprocess.run("rm -f ${HOME}/tests/*", shell=True, check=True)
     subprocess.run("conda build recipes/pkg_b", shell=True, check=True)
 
-    assert os.path.exists(TESTS, 'b_tests_ran')
+    assert os.path.exists(os.path.join(TESTS, 'b_tests_ran'))
 
     pname = os.path.join(
         CONDA_BLD, 'linux-64', 'b-1-py37_0.tar.bz2')
