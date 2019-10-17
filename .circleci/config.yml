@@ -59,7 +59,7 @@ jobs:
             conda info
 
       - run:
-          name: build-base
+          name: build-test-base
           command: |
             export PATH=`pwd`/miniconda/bin:$PATH
             source activate base
@@ -69,13 +69,13 @@ jobs:
             echo "building packages..."
 
             conda build recipes/pkg_a
-            ls -1 ${HOME}/tests
-            if [ ! -f "${HOME}/a_tests_ran" ]; then exit 1; fi
+            if [ ! -f "${HOME}/tests/a_tests_ran" ]; then exit 1; fi
+            rm ${HOME}/tests/*
             echo " "
 
             conda build recipes/pkg_b
-            ls -1 ${HOME}/tests
-            if [ ! -f "${HOME}/b_tests_ran" ]; then exit 1; fi
+            if [ ! -f "${HOME}/tests/b_tests_ran" ]; then exit 1; fi
+            rm ${HOME}/tests/*
             echo " "
 
       - run:
