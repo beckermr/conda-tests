@@ -87,6 +87,11 @@ jobs:
             rm ${HOME}/tests/*
             echo " "
 
+            conda build --use-local recipes/pkg_c
+            if [ ! -f "${HOME}/tests/c_tests_ran" ]; then exit 1; fi
+            rm ${HOME}/tests/*
+            echo " "
+
       - run:
           name: test
           command: |
