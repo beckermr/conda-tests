@@ -63,12 +63,17 @@ jobs:
           command: |
             export PATH=`pwd`/miniconda/bin:$PATH
             source activate base
+
+            mkdir -p ${HOME}/tests
+
             echo "building packages..."
 
             conda build recipes/pkg_a
+            if [ ! -f ${HOME}/a_tests_ran ]; then exit 1; fi
             echo " "
 
             conda build recipes/pkg_b
+            if [ ! -f ${HOME}/b_tests_ran ]; then exit 1; fi
             echo " "
 
       - run:
