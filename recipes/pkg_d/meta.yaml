@@ -42,7 +42,7 @@ outputs:
         - b
 
 test:
-  requirements:
+  requires:
     - x
 
 about:
