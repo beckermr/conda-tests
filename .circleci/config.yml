@@ -47,12 +47,26 @@ jobs:
               conda-build \
               pytest
 
-            # build all of the packages
-
       - save_cache:
           paths:
             - ./miniconda
           key: v0-dependencies
+
+      - run:
+          name: info
+          command: |
+            export PATH=`pwd`/miniconda/bin:$PATH
+            source activate test-env
+            cond list
+            echo " "
+            conda info
+
+      - run:
+          name: build-base
+          command: |
+            export PATH=`pwd`/miniconda/bin:$PATH
+            source activate test-env
+            echo "building packages"
 
       - run:
           name: test
