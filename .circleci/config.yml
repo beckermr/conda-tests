@@ -1,65 +1,67 @@
-version: 2
-triggers:
-  - schedule:
-      cron: "* * * * *"
-      filters:
-        branches:
-          only:
-            - master
-
-jobs:
+workflows:
+  version: 2
   build:
-    docker:
-      - image: circleci/python:3.6.4
+    triggers:
+      - schedule:
+          cron: "0,5,10,15,20,25,30,35,40,45,50,55 * * * *"
+          filters:
+            branches:
+              only:
+                - master
 
-    working_directory: ~/repo
+    jobs:
+      build:
+        docker:
+          - image: circleci/python:3.6.4
 
-    steps:
-      - checkout
+        working_directory: ~/repo
 
-      - run:
-          name: install miniconda
-          command: |
-            curl -s https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda.sh
-            bash miniconda.sh -b -p ${HOME}/miniconda
+        steps:
+          - checkout
 
-            export PATH=${HOME}/miniconda/bin:$PATH
+          - run:
+              name: install miniconda
+              command: |
+                curl -s https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda.sh
+                bash miniconda.sh -b -p ${HOME}/miniconda
 
-            conda config --set always_yes yes --set changeps1 no
-            conda config --add channels defaults
-            conda config --add channels conda-forge
-            conda update -q conda
+                export PATH=${HOME}/miniconda/bin:$PATH
 
-            source activate base
+                conda config --set always_yes yes --set changeps1 no
+                conda config --add channels defaults
+                conda config --add channels conda-forge
+                conda update -q conda
 
-            conda install -y -q \
-              nomkl \
-              conda \
-              conda-build \
-              pytest \
-              python=3.7
+                source activate base
 
-      - run:
-          name: conda list and info
-          command: |
-            export PATH=${HOME}/miniconda/bin:$PATH
-            source activate base
-            conda list
-            echo " "
-            conda info
+                conda install -y -q \
+                  nomkl \
+                  conda \
+                  conda-build \
+                  pytest \
+                  python=3.7
 
-      - run:
-          name: test simple builds
-          command: |
-            export PATH=${HOME}/miniconda/bin:$PATH
-            source activate base
-            mkdir -p ${HOME}/tests
-            pytest -vv -s test_simple_builds.py
+          - run:
+              name: conda list and info
+              command: |
+                export PATH=${HOME}/miniconda/bin:$PATH
+                source activate base
+                conda list
+                echo " "
+                conda info
 
-      - run:
-          name: test complicated builds
-          command: |
-            export PATH=${HOME}/miniconda/bin:$PATH
-            source activate base
-            mkdir -p ${HOME}/tests
-            pytest -vv -s test_complicated_builds.py
+          - run:
+              name: test simple builds
+              command: |
+                export PATH=${HOME}/miniconda/bin:$PATH
+                source activate base
+                mkdir -p ${HOME}/tests
+                pytest -vv -s test_simple_builds.py
+
+          - run:
+              name: test complicated builds
+              command: |
+                export PATH=${HOME}/miniconda/bin:$PATH
+                source activate base
+                mkdir -p ${HOME}/tests
+                pytest -vv -s test_complicated_builds.py
