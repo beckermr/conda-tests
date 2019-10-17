@@ -1,0 +1,33 @@
+{% set name = "x" %}
+{% set version = "1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+build:
+  number: 0
+  script: |
+    echo "#!/bin/bash
+
+    echo \"!!!!!! PKG {{ name }} !!!!!!\"" > ${PREFIX}/bin/pkg-{{ name }}
+    chmod u+x ${PREFIX}/bin/pkg-{{ name }}
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+
+test:
+  commands:
+    - test -f ${PREFIX}/bin/pkg-{{ name }}
+    - pkg-{{ name }}
+    - touch ${HOME}/tests/{{ name }}_tests_ran
+
+about:
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: 'pkg {{ name }}'

@@ -1,0 +1,52 @@
+{% set name = "d" %}
+{% set version = "1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+build:
+  number: 0
+  script: |
+    echo "#!/bin/bash
+
+    echo \"!!!!!! PKG {{ name }}-first !!!!!!\"" > ${PREFIX}/bin/pkg-{{ name }}-first
+    chmod u+x ${PREFIX}/bin/pkg-{{ name }}-first
+
+    echo "#!/bin/bash
+
+    echo \"!!!!!! PKG {{ name }}-second !!!!!!\"" > ${PREFIX}/bin/pkg-{{ name }}-second
+    chmod u+x ${PREFIX}/bin/pkg-{{ name }}-second
+
+requirements:
+  host:
+    - python
+    - pip
+
+outputs:
+  - name: d-first
+    version: "1"
+    files:
+      - ${PREFIX}/bin/pkg-d-first
+    test:
+      script: run_test_d_first.sh
+
+  - name: d-second
+    version: "1"
+    files:
+      - ${PREFIX}/bin/pkg-d-first
+    test:
+      script: run_test_d_second.sh
+      downstreams:
+        - a
+        - b
+
+test:
+  requirements:
+    - x
+
+about:
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: 'pkg {{ name }}'
