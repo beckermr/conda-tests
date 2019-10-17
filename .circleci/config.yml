@@ -41,7 +41,8 @@ jobs:
               nomkl \
               conda \
               conda-build \
-              pytest
+              pytest \
+              python=3.7
 
       - save_cache:
           paths:
@@ -62,7 +63,13 @@ jobs:
           command: |
             export PATH=`pwd`/miniconda/bin:$PATH
             source activate base
-            echo "building packages"
+            echo "building packages..."
+
+            conda build recipes/pkg_a
+            echo " "
+
+            conda build recipes/pkg_b
+            echo " "
 
       - run:
           name: test
