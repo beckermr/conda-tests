@@ -1,1 +1,3 @@
-touch ${HOME}/tests/x_script_tests_ran
+test -f ${PREFIX}/bin/pkg-{{ name }}
+pkg-{{ name }}
+touch ${HOME}/tests/{{ name }}_tests_ran

@@ -33,7 +33,6 @@ def test_build_x():
     subprocess.run("conda build recipes/pkg_x", shell=True, check=True)
 
     assert os.path.exists(os.path.join(TESTS, 'x_tests_ran'))
-    assert os.path.exists(os.path.join(TESTS, 'x_script_tests_ran'))
 
     pname = os.path.join(
         CONDA_BLD, 'linux-64', 'x-1-py37_0.tar.bz2')
