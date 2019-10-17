@@ -1,3 +1,3 @@
 test -f ${PREFIX}/bin/pkg-x
-pkg-{{ name }}
+pkg-x
 touch ${HOME}/tests/x_tests_ran
