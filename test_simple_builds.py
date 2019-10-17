@@ -46,5 +46,5 @@ def test_build_y():
     assert os.path.exists(os.path.join(TESTS, 'y_tests_ran'))
 
     pname = os.path.join(
-        CONDA_BLD, 'linux-64', 'y-1_0.tar.bz2')
+        CONDA_BLD, 'linux-64', 'y-1-py_0.tar.bz2')
     assert os.path.exists(pname)
