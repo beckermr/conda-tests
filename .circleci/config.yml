@@ -18,24 +18,11 @@ jobs:
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-          - v0-dependencies
-
       - run:
-          name: install dependencies
+          name: install miniconda
           command: |
-            if [ ! -d "${HOME}/miniconda" ]; then
-              curl -s https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda.sh
-              bash miniconda.sh -b -p ${HOME}/miniconda
-
-              export PATH=${HOME}/miniconda/bin:$PATH
-
-              conda config --set always_yes yes --set changeps1 no
-              conda config --add channels defaults
-              conda config --add channels conda-forge
-              conda update -q conda
-            fi
+            curl -s https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda.sh
+            bash miniconda.sh -b -p ${HOME}/miniconda
 
             export PATH=${HOME}/miniconda/bin:$PATH
 
@@ -53,13 +40,8 @@ jobs:
               pytest \
               python=3.7
 
-      - save_cache:
-          paths:
-            - ${HOME}/miniconda
-          key: v0-dependencies
-
       - run:
-          name: info
+          name: conda list and info
           command: |
             export PATH=${HOME}/miniconda/bin:$PATH
             source activate base
@@ -68,35 +50,10 @@ jobs:
             conda info
 
       - run:
-          name: build-test-base
+          name: test builds
           command: |
             export PATH=${HOME}/miniconda/bin:$PATH
             source activate base
-
             mkdir -p ${HOME}/tests
-
-            echo "building packages..."
-
-            conda build recipes/pkg_a
-            if [ ! -f "${HOME}/tests/a_tests_ran" ]; then exit 1; fi
-            rm ${HOME}/tests/*
-            echo " "
-
-            conda build recipes/pkg_b
-            if [ ! -f "${HOME}/tests/b_tests_ran" ]; then exit 1; fi
-            rm ${HOME}/tests/*
-            echo " "
-
-            conda build --use-local recipes/pkg_c
-            if [ ! -f "${HOME}/tests/c_tests_ran" ]; then exit 1; fi
-            rm ${HOME}/tests/*
-            echo " "
-
-            ls -1 ${HOME}/miniconda/conda-bld/*/*
-
-      - run:
-          name: test
-          command: |
-            export PATH=${HOME}/miniconda/bin:$PATH
-            source activate base
-            pytest -vv test_conda.py
+            pytest -vv -s test_simple_builds.py
+            pytest -vv -s test_complicated_builds.py

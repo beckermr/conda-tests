@@ -26,9 +26,9 @@ test:
     - pkg-{{ name }}
     - touch ${HOME}/tests/{{ name }}_tests_ran
 
-  downstream:
-    - a =1
-    - b =1
+  downstreams:
+    - a
+    - b
 
 about:
   license: MIT
