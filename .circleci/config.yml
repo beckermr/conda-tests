@@ -57,7 +57,7 @@ jobs:
           command: |
             export PATH=`pwd`/miniconda/bin:$PATH
             source activate test-env
-            cond list
+            conda list
             echo " "
             conda info
 
