@@ -10,6 +10,6 @@ def test_a_python_versions(pyver):
     assert os.path.exists(pname)
 
 
-def test_b_exists(pyver):
+def test_b_exists():
     pname = os.path.join(CONDA_BLD, 'linux-64', 'b-1-py37_0.tar.bz2')
     assert os.path.exists(pname)
