@@ -25,11 +25,11 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            if [ ! -d miniconda ]; then
+            if [ ! -d "${HOME}/miniconda" ]; then
               curl -s https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda.sh
-              bash miniconda.sh -b -p miniconda
+              bash miniconda.sh -b -p ${HOME}/miniconda
 
-              export PATH=`pwd`/miniconda/bin:$PATH
+              export PATH=${HOME}/miniconda/bin:$PATH
 
               conda config --set always_yes yes --set changeps1 no
               conda config --add channels defaults
@@ -37,7 +37,7 @@ jobs:
               conda update -q conda
             fi
 
-            export PATH=`pwd`/miniconda/bin:$PATH
+            export PATH=${HOME}/miniconda/bin:$PATH
 
             conda config --set always_yes yes --set changeps1 no
             conda config --add channels defaults
@@ -61,7 +61,7 @@ jobs:
       - run:
           name: info
           command: |
-            export PATH=`pwd`/miniconda/bin:$PATH
+            export PATH=${HOME}/miniconda/bin:$PATH
             source activate base
             conda list
             echo " "
@@ -70,7 +70,7 @@ jobs:
       - run:
           name: build-test-base
           command: |
-            export PATH=`pwd`/miniconda/bin:$PATH
+            export PATH=${HOME}/miniconda/bin:$PATH
             source activate base
 
             mkdir -p ${HOME}/tests
@@ -92,9 +92,11 @@ jobs:
             rm ${HOME}/tests/*
             echo " "
 
+            ls -1 ${HOME}/miniconda/conda-bld/*/*
+
       - run:
           name: test
           command: |
-            export PATH=`pwd`/miniconda/bin:$PATH
+            export PATH=${HOME}/miniconda/bin:$PATH
             source activate base
             pytest -vv test_conda.py
