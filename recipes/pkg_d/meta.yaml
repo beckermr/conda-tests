@@ -27,14 +27,14 @@ outputs:
   - name: d-first
     version: "1"
     files:
-      - ${PREFIX}/bin/pkg-d-first
+      - {{ PREFIX }}/bin/pkg-d-first
     test:
       script: run_test_d_first.sh
 
   - name: d-second
     version: "1"
     files:
-      - ${PREFIX}/bin/pkg-d-first
+      - {{ PREFIX }}/bin/pkg-d-second
     test:
       script: run_test_d_second.sh
       downstreams:
