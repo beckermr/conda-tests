@@ -30,6 +30,8 @@ outputs:
       - {{ PREFIX }}/bin/pkg-d-first
     test:
       script: run_test_d_first.sh
+      requires:
+        - x
 
   - name: d-second
     version: "1"
@@ -37,6 +39,8 @@ outputs:
       - {{ PREFIX }}/bin/pkg-d-second
     test:
       script: run_test_d_second.sh
+      requires:
+        - x
       downstreams:
         - a
         - b
