@@ -1,0 +1,29 @@
+{% set name = "f" %}
+{% set version = "1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+build:
+  number: 0
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+
+test:
+  commands:
+    - test -f ${PREFIX}/bin/pkg-{{ name }}
+    - test -f ${PREFIX}/lib/test_f_link
+    - pkg-{{ name }}
+    - touch ${HOME}/tests/{{ name }}_tests_ran
+
+about:
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: 'pkg {{ name }}'
