@@ -18,7 +18,7 @@ requirements:
 test:
   commands:
     - test -f ${PREFIX}/bin/pkg-{{ name }}
-    - test -f ${PREFIX}/lib/test_f_link
+    - test -L ${PREFIX}/lib/test_f_link
     - pkg-{{ name }}
     - touch ${HOME}/tests/{{ name }}_tests_ran
 
