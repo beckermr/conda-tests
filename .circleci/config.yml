@@ -46,15 +46,7 @@ jobs:
             export PATH=${HOME}/miniconda/bin:$PATH
             source activate base
             mkdir -p ${HOME}/tests
-            pytest -vv -s test_simple_builds.py
-
-      - run:
-          name: test complicated builds
-          command: |
-            export PATH=${HOME}/miniconda/bin:$PATH
-            source activate base
-            mkdir -p ${HOME}/tests
-            pytest -vv -s test_complicated_builds.py
+            pytest -vv -s test_simple_builds.py test_complicated_builds.py
 
 workflows:
   version: 2
