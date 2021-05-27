@@ -59,3 +59,14 @@ def test_build_f():
     pname = os.path.join(
         CONDA_BLD, 'linux-64', 'f-1-py37_0.tar.bz2')
     assert os.path.exists(pname)
+
+
+def test_build_g():
+    subprocess.run("rm -f ${HOME}/tests/*", shell=True, check=True)
+    subprocess.run("conda build recipes/pkg_g", shell=True, check=True)
+
+    assert os.path.exists(os.path.join(TESTS, 'g_tests_ran'))
+
+    pname = os.path.join(
+        CONDA_BLD, 'linux-64', 'g-1-py37_0.tar.bz2')
+    assert os.path.exists(pname)
